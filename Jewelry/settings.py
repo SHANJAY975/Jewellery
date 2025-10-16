@@ -153,10 +153,10 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # Your Gmail address
-EMAIL_HOST_USER = 'shanjay.ssj@gmail.com'
+EMAIL_HOST_USER = config('EMAIL')
 
 # Your 16-character App Password from Google
-EMAIL_HOST_PASSWORD = 'mnvj yiwu pred msnq'
+EMAIL_HOST_PASSWORD = config('PASSCODE')
 
 # Default sender
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
