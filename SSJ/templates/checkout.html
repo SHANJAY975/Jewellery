@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!--Checkout Section-->
+    <section class="container my-5">
+        <div class="mb-3">
+            <a href="{% url "SSJ:review_checkout" %}" class="text-secondary text-decoration-none small">&larr; BACK TO ORDER REVIEW</a>
+        </div>
+
+        <div class="container">
+            <div class="row g-5">
+                <!-- Left Column (Scrollable) -->
+                
+                <div class="col-lg-7 overflow-auto pe-3 " style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <h3 class="cormorant-garamond">My Information</h3>
+                    <hr>
+                    <!-- Error message -->
+                        {% for field in orderform %}
+                            {% if field.errors %}
+                            <div class="col-12">
+                                <span class="fw-bold">{{field.label_tag}}</span>
+                                {% for error in field.errors %}
+                                <span class="text-danger">{{error}}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+
+                        <!-- Validation-->
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <span class="text-danger">{{error}}</span>
+                        </div>
+                        {% endfor %}
+                    <form action="{% url "SSJ:checkout" %}" method="POST" id="purchaseform">
+                    {% csrf_token %}
+                    <!-- Contact Info -->
+                    <div class="mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Email address" value="{{orderform.email.value|default:"shanjay.ssj@gmail.com"}}">
+                    </div>
+                    <div class="mb-3">
+                    <input type="tel" name="phone" class="form-control" placeholder="Phone Number" value="{{orderform.phone.value|default:"8438555282"}}">
+                    </div>
+                    <div class="mb-3">
+                    <input type="text" name="address" class="form-control" placeholder="Address" value="{{orderform.address.value|default:"3,valayalkara 1st Street, Karur"}}">
+                    </div>
+
+                    <div class="row g-3">
+                    <div class="col-md-4"><input type="text" name="city" class="form-control" placeholder="City" value="{{orderform.city.value|default:"Karur"}}"></div>
+                    <div class="col-md-4"><input type="text" name="state" class="form-control" placeholder="State" value="{{orderform.state.value|default:"Tamilnadu"}}"></div>
+                    <div class="col-md-4"><input type="text" name="zip_code" class="form-control" placeholder="ZIP Code" value="{{orderform.zip_code.value|default:"639001"}}"></div>
+                    </div>
+
+                    <!-- Delivery Method -->
+                    <div class="mt-5">
+                        <h4 class="fw-semibold mb-3">How would you like to receive your order?</h4>
+                        <hr>
+                        <div class="d-flex flex-wrap gap-3 mb-4">
+                            <!-- Shipment -->
+                            <div class="form-check border rounded-3 p-3 shadow-sm flex-fill" style="max-width: 250px;">
+                            <input class="form-check-input me-2" type="radio" name="order_type" id="shipmentRadio" value="shipment" onclick="showSection('shipmentSection','billing_information')">
+                            <label class="form-check-label fw-medium" for="shipmentRadio">
+                                📦 By Shipment <small class="d-block text-muted">Delivered to your address</small>
+                            </label>
+                            </div>
+
+                            <!-- In Person -->
+                            <div class="form-check border rounded-3 p-3 shadow-sm flex-fill" style="max-width: 250px;">
+                            <input class="form-check-input me-2" type="radio" name="order_type" id="inPersonRadio" value="in_person" onclick="showSection('inPersonSection','billing_information')">
+                            <label class="form-check-label fw-medium" for="inPersonRadio">
+                                🏬 In Person <small class="d-block text-muted">Pick up from store</small>
+                            </label>
+                            </div>
+                        </div>
+
+                        <!-- Shipping Section -->
+                        <div id="shipmentSection" class="d-none">
+                            <h5> Shipping Details
+                            </h5>
+                            <hr>
+                            <input type="text" name="shipping_address" class="form-control my-4" placeholder="Shipping address" value="{{orderform.shipping_address.value|default:"3, valayalkara 1st Street"}}">
+                            <div class="row">
+                            <div class="col"><input type="text" name="shipping_city" class="form-control" placeholder="City" value="{{orderform.shipping_city.value|default:"Karur"}}"></div>
+                            <div class="col"><input type="text" name="shipping_state" class="form-control" placeholder="State" value="{{orderform.shipping_state.value|default:"Tamilnadu"}}"></div>
+                            <div class="col"><input type="text" name="shipping_zip" class="form-control" placeholder="ZIP Code" value="{{orderform.shipping_zip.value|default:"639001"}}"></div>
+                            </div>
+                        </div>
+
+                        <!-- In-Person Section -->
+                        <div id="inPersonSection" class="d-none">
+                            <h5>Pickup Location</h5>
+                            <hr>
+                            <p class="fw-bold mb-0">Sri Sangunthala Jewellery</p>
+                            <p class="mb-0">325, Jawahaar Bazar, Karur</p>
+                            <p class="mb-1">Tamil Nadu - 639001</p>
+                            <p>Pickup available between 10AM - 8PM</p>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+                <!-- Right Column (Sticky) -->
+                <div class="col-lg-4">
+                <div class="card border-0 shadow sticky-top" style="top: 80px;">
+                    <div class="card-body">
+                    <h5 class="card-title text-center mb-4 fw-semibold">Order Total</h5>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal</span>
+                        <span>&#8377;{{sub_total}}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping</span>
+                        <span>&#8377;200</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>GST</span>
+                        <span>&#8377;{{gst}}</span>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between fw-bold fs-5 mb-4">
+                        <span>Total</span>
+                        <span>&#8377;{{total}}</span>
+                    </div>
+
+                    {% comment %} <button class="btn btn-dark w-100 py-2 fw-semibold" type="submit" form="purchaseform">PURCHASE</button> {% endcomment %}
+                    <button class="btn btn-dark w-100 py-2 fw-semibold" type="submit" form="purchaseform">
+                        PURCHASE
+                    </button>
+
+
+                    </div>
+                
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    // Toggle shipment or in-person sections
+    function showSection(sectionId,billing_id) {
+        const shipmentSection = document.getElementById('shipmentSection');
+        const inPersonSection = document.getElementById('inPersonSection');
+        const billing_information = document.getElementById('billing_information');
+
+        // Hide both first
+        shipmentSection.classList.add('d-none');
+        inPersonSection.classList.add('d-none');
+       
+
+        // Show selected one
+        document.getElementById(sectionId).classList.remove('d-none');
+    }
+
+    function autofillShipping() {
+        // You can later replace this with Django context variables or AJAX
+        alert('Autofill feature will be implemented with Django backend');
+    }
+    </script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        {% if open_razorpay and razorpay_order %}
+        window.onload = function() {
+        const options = {
+            key: "{{ key_id }}",
+            amount: "{{ razorpay_order.amount }}",
+            currency: "{{ razorpay_order.currency }}",
+            order_id: "{{ razorpay_order.id }}",
+            name: "Sri Sangunthala Jewellery",
+            description: "Order Payment",
+            handler: function (response) {
+            // Submit verification form after payment success
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "{% url 'SSJ:verify_payment' %}";
+
+            const fields = ["razorpay_payment_id", "razorpay_order_id", "razorpay_signature"];
+            fields.forEach(f => {
+                const input = document.createElement("input");
+                input.name = f;
+                input.value = response[f];
+                form.appendChild(input);
+            });
+
+            const csrf = document.createElement("input");
+            csrf.name = "csrfmiddlewaretoken";
+            csrf.value = "{{ csrf_token }}";
+            form.appendChild(csrf);
+
+            document.body.appendChild(form);
+            form.submit();
+            },
+            theme: { color: "#212529" }
+        };
+
+        const rzp = new Razorpay(options);
+        rzp.open();
+        }
+        {% endif %}
+    </script>
+
+
+{% endblock content %}

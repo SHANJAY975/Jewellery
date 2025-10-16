@@ -1,0 +1,362 @@
+    {% load static %}
+    
+    <header class="sticky-top bg-white">
+        <nav class="navbar navbar-expand-lg justify-content-between align-items-center text-secondary px-3">
+            
+            <!-- Hamburger button (visible on mobile/tablet) -->
+            <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm0-4a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11z"/>
+                </svg>
+            </button>
+
+            <!-- Left Menus (hidden on mobile/tablet) -->
+            <div class="d-none d-lg-flex align-items-center text-secondary">
+                <div class="dropdown">
+                    <a class="btn dropdown-toggle text-secondary no-arrow" href="#">JEWELRY</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'SSJ:all_products' %}">All Products</a>
+                        <a class="dropdown-item" href="{% url 'SSJ:necklaces' %}">Necklaces</a>
+                        <a class="dropdown-item" href="{% url 'SSJ:earrings' %}">Earrings</a>
+                        <a class="dropdown-item" href="{% url 'SSJ:bracelets' %}">Bracelets</a>
+                        <a class="dropdown-item" href="{% url 'SSJ:rings' %}">Rings</a>
+                    </div>
+                </div>
+
+                <a class="text-decoration-none text-secondary mx-3" href="{% url "SSJ:generate_jewellery_image" %}">Generate Your Design</a>
+                <a class="text-decoration-none text-secondary mx-3" href="gifts.html">GIFTS</a>
+            </div>
+
+            <!-- Brand (always centered) -->
+            <div class="navbar-brand position-absolute start-50 translate-middle-x">
+                <a class="text-decoration-none fw-bold text-muted" href="{% url 'SSJ:landing_page' %}">SSJ</a>
+            </div>
+
+            <!-- Right Side Icons -->
+            <div class="d-flex align-items-center ms-auto">
+                {% comment %} <div class="px-2 d-none d-md-block">
+                    <form action="">
+                    <input class="form-input border-none" type="text" placeholder="Search">
+                    </form>
+                </div> {% endcomment %}
+
+            {% if user.is_authenticated %}
+            <!-- Favourite -->
+            <button type="button" class="btn text-dark fw-bold px-3" data-bs-toggle="modal" data-bs-target="#favourites" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg></button>
+
+
+            <!-- Cart -->
+            <button class="btn text-dark fw-bold px-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartbtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-check-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0m-.646 5.354a.5.5 0 0 0-.708-.708L7.5 10.793 6.354 9.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z"/></svg></button>
+
+            <!-- Profile -->
+            <div class="dropdown no-hover">
+                <button class="btn text-dark px-3" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end me-3" aria-labelledby="userMenu">
+                <li><a class="dropdown-item mx-3" href="">Profile</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item text-danger mx-3" href="{% url 'SSJ:logout' %}">Logout</a></li>
+                </ul>
+            </div>
+            {% else %}
+            <!-- Login -->
+            <button class="btn text-dark px-2" type="button" data-bs-toggle="modal" data-bs-target="#Login">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
+            </button>
+            {% endif %}
+            </div>
+        </nav>
+
+        <!-- Mobile Sidebar Menu -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
+            <div class="offcanvas-header border-bottom">
+                <h5 id="mobileMenuLabel" class="fw-bold text-muted">SSJ Menu</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
+            <div class="offcanvas-body px-4">
+                <!-- JEWELLERY Dropdown -->
+                <div class="accordion" id="menuAccordion">
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header" id="headingJewelry">
+                        <button class="accordion-button fw-semibold text-dark bg-transparent shadow-none px-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJewelry" aria-expanded="true" aria-controls="collapseJewelry">
+                            JEWELRY
+                        </button>
+                        </h2>
+                        <div id="collapseJewelry" class="accordion-collapse collapse show" aria-labelledby="headingJewelry" data-bs-parent="#menuAccordion">
+                        <div class="accordion-body px-0 pt-0">
+                            <a href="{% url 'SSJ:all_products' %}" class="d-block text-decoration-none text-secondary mb-2 ps-3">All Products</a>
+                            <a href="{% url 'SSJ:necklaces' %}" class="d-block text-decoration-none text-secondary mb-2 ps-3">Necklaces</a>
+                            <a href="{% url 'SSJ:earrings' %}" class="d-block text-decoration-none text-secondary mb-2 ps-3">Earrings</a>
+                            <a href="{% url 'SSJ:bracelets' %}" class="d-block text-decoration-none text-secondary mb-2 ps-3">Bracelets</a>
+                            <a href="{% url 'SSJ:rings' %}" class="d-block text-decoration-none text-secondary mb-2 ps-3">Rings</a>
+                        </div>
+                        </div>
+                    </div>    
+                </div>
+                <!-- Direct Links -->
+                <!-- NEW RELEASES -->
+                <a href="{% url "SSJ:generate_jewellery_image" %}" class="d-block fw-semibold text-dark text-decoration-none mt-3">Generate Jewellery Image</a>
+                <!-- GIFTS -->
+                <a href="gifts.html" class="d-block fw-semibold text-dark text-decoration-none mt-3">GIFTS</a>
+
+
+                <hr class="mt-4 mb-3">
+
+                <!-- Optional Bottom Section -->
+                <div class="text-center">
+                <a href="#" class="text-decoration-none text-muted small d-block mb-2">Customer Service</a>
+                <a href="#" class="text-decoration-none text-muted small d-block">About SSJ</a>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <section>
+        <!-- Favourites Modal -->
+        <div class="modal fade" id="favourites" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="mx-3 d-flex align-items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>
+                            <h5 class="modal-title">My Favourites</h5>
+                        </div>
+                        
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            {% if not favourites_list %}
+                                <div class="m-5 p-5 text-muted text-center">
+                                    Favourites is Empty
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                
+                                {% for favourite in favourites_list  %}
+                                    <div class="col-12 col-md-4 mb-4 text-center">
+                                        <a href="{% url "SSJ:details" slug=favourite.product.slug %}" class="text-decoration-none text-dark">
+                                        <img src="{{favourite.product.formatted_url}}" class="img-fluid product-img mb-2" alt="Cornicello Charm">
+                                        <h6 class="fw-bold">{{favourite.product.product_name}}</h6>
+                                        <p class="text-muted">&#8377;{{favourite.product.current_price}}</p>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cart Details -->
+        <div class="offcanvas offcanvas-end custom-offcanvas" id="cartbtn" tabindex="-1">
+            <div class="offcanvas-header offcanvas_header_color p-4">
+                <div class="d-flex align-items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" 
+                        class="bi bi-bag" viewBox="0 0 16 16">
+                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                    </svg>
+                    <h5 class="offcanvas-title mb-0 fs-5">In My Bag</h5>
+                </div>
+                <button class="btn-close" data-bs-dismiss="offcanvas" type="button" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                {% if cartitems %}
+                    {% for item in cartitems %}
+                        <div class="card my-2">
+                            <div class="card-body">
+                                <a href="{% url "SSJ:details" slug=item.product.slug %}" class="text-decoration-none text-dark">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <img class="img-fluid" src="{{item.product.formatted_url}}" alt="" >
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="d-flex justify-content-between ">
+                                                <div class="">
+                                                    <h6 class="pt-2 mb-1">{{item.product.product_name}}</h6>
+                                                    <p class="fs-6 small mb-0">
+                                                        &#8377; {{item.product.current_price}}
+                                                    </p>
+                                                    <p class="">Quantity: 1</p>
+                                                </div>
+                                                <form action="{% url "SSJ:delete_from_cart" item_id=item.id%}" method="POST">
+                                                    {% csrf_token %}
+                                                    <button class="btn" type="submit" >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                                            </svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                                
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="mt-auto d-flex justify-content-center">
+                        <a class="text-decoration-none text-center text-white w-50 bg-dark rounded-0 fw-bold py-2" href="{% url "SSJ:review_checkout" %}" id="checkout">CHECKOUT</a>
+                    </div>
+                {% else %}
+                <div class="m-5 p-5 text-muted text-center">
+                    Your Cart is Empty
+                 </div>
+                {% endif %}
+
+            </div> 
+        </div>
+
+        <!-- Login Modal -->
+        <div class="modal fade" id="Login">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header p-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
+                            <h5 class="modal-title">Login</h5>
+                        </div>
+                        
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body m-3">
+                        <!-- Error message -->
+                        {% for field in form %}
+                            {% if field.errors %}
+                            <div class="col-12">
+                                <span class="fw-bold">{{field.label_tag}}</span>
+                                {% for error in field.errors %}
+                                <span class="text-danger">{{error}}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        <!-- Validation-->
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <span class="text-danger">{{error}}</span>
+                        </div>
+                        {% endfor %}
+                        <!-- Success Message-->
+                        {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success">
+                                {{message}}
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                        <form method="post" action="{% url "SSJ:login" %}">
+                            {% csrf_token %}
+                            <input class="form-control mb-3" type="text" name="username" placeholder="Username" value="{{form.username.value|default:""}}">
+                            <input class="form-control mb-3" type="password" name="password" placeholder="Password">
+                            <div class="text-end mb-3 fs-6">
+                                <a href="{% url "SSJ:forgot_password" %}" class="text-decoration-none forgot-link ">Forgot Password</a>
+                            </div>
+                        
+                            <div class="d-grid">
+                                <button class="btn btn-dark text-white" type="submit">LOG IN</button>
+                            </div>
+                            
+                        </form>
+                        <div class="text-center">
+                            <p class="m-1">Don’t have an account?</p>
+                            <button class="btn" style="color: #B18165;" type="button" data-bs-toggle="modal" data-bs-target="#Signup">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign up Modal -->
+        <div class="modal fade" id="Signup">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header p-3">
+                        <div class="d-flex align-items-center gap-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/></svg>
+                            <h5 class="modal-title">Sign Up</h5>
+                        </div>
+                        
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body m-3">
+                        <!-- Error message -->
+                        {% for field in form %}
+                            {% if field.errors %}
+                            <div class="col-12">
+                                <span class="fw-bold">{{field.label_tag}}</span>
+                                {% for error in field.errors %}
+                                <span class="text-danger">{{error}}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        <!-- Validation-->
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <span class="text-danger">{{error}}</span>
+                        </div>
+                        {% endfor %}
+                        <form method="post" action="{% url 'SSJ:sign_up' %}">
+                            {% csrf_token %}
+                            <input class="form-control mb-3" type="text" name="username" placeholder="Username" value="{{form.username.value| default:""}}">
+                            <input class="form-control mb-3" type="email" name="email" placeholder="Email Address" value="{{form.email.value| default:""}}">
+                            <input class="form-control mb-3" type="password" name="password" placeholder="Password">
+                            <input class="form-control mb-3" type="password" name="password_confirm" placeholder="Confirm Password">
+
+                            
+                            <div class="d-grid">
+                                <button class="btn btn-dark text-white" type="submit">SIGN UP</button>
+                            </div>
+                            
+                        </form>
+                        <div class="text-center">
+                            <p class="m-1">Already have an account?</p>
+                            <button class="btn" style="color: #B18165;" type="button" data-bs-toggle="modal" data-bs-target="#Login">LOG IN</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% if show_signup_modal %}
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var signupModal = new bootstrap.Modal(document.getElementById('Signup'));
+                    signupModal.show();
+                });
+            </script>
+        {% endif %}
+        {% if show_Login_modal %}
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var signupModal = new bootstrap.Modal(document.getElementById('Login'));
+                    signupModal.show();
+                });
+            </script>
+        {% endif %}
+    </section>
+
+    <script>
+        document.querySelectorAll('.remove-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const itemId = btn.dataset.itemId;
+            fetch(`/cart/remove/${itemId}/`, {
+            method: 'POST',
+            headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+            })
+            .then(res => res.json())
+            .then(data => {
+            if (data.success) location.reload();
+            });
+        });
+        });
+    </script>

@@ -1,0 +1,22 @@
+# VSCode
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Python virtual environments
+venv/
+env/
+
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+db.sqlite3
+*.sqlite3
+
+.env
+
+/media/generated

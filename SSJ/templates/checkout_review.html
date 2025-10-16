@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!--Checkout Section-->
+    <section>
+        
+        <div class="container mt-4">
+            <div class="row g-4">
+                <!-- Left Section -->
+                <div class="col-lg-8">
+                    <h4 class="fw-semibold mb-4">Order Review</h4>
+
+                    {% if cartitems %}
+                        {% for item in cartitems %}
+                            <div class="border-bottom pb-3 mb-3">
+                                <div class="d-flex justify-content-between align-items-start">
+                                <div class="d-flex align-items-start">
+                                    <img src="{{item.product.formatted_url}}" alt="Sample Item" class="img-thumbnail me-3" style="width:150px;height:170px;">
+                                    <div class="mt-3">
+                                        <div >
+                                            <h6 class="mb-1 fw-semibold">{{item.product.product_name}}</h6>
+                                            <p class="mb-1 text-muted small">Quantity: {{item.quantity}}</p>
+                                        </div>
+                                        <div class="pt-3">
+                                            <a href="#" class="text-secondary pt-5 text-decoration-underline small ">Edit Order</a>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <div class="text-end mt-3">
+                                    <h6 class="mb-0">&#8377; {{item.product.current_price}}</h6>
+                                    <button class="btn btn-link text-muted p-0 fs-5" title="Remove"><i class="bi bi-trash"></i></button>
+                                </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                </div>
+
+                <!-- Right Section (Order Summary) -->
+                <div class="col-lg-4 my-5 ">
+                    <div class="card shadow  border-0">
+                        <div class="card-body">
+                        <h5 class="fw-semibold mb-3">Order Summary</h5>
+                        {% for item in cartitems %}
+                            <div class="d-flex justify-content-between small mb-2">
+                                <span>{{item.product.product_name}}</span>
+                                <span> &#8377;{{item.product.current_price}}</span>
+                            </div>
+                        {% endfor %}
+                        
+
+                        <hr>
+                        <div class="d-flex justify-content-between fw-semibold mb-3">
+                            <span>Subtotal</span>
+                            <span> &#8377;{{sub_total}}</span>
+                        </div>
+
+                        <a class="btn btn-dark w-100 py-2" href="{% url "SSJ:checkout" %}">Fill Out Order Info</a>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+
+
+    </section>
+{% endblock content %}

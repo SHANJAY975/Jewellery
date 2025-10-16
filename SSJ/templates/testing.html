@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<!-- Product Details  -->
+    <section>
+        <div class="container py-5">
+            <div class="row align-items-start justify-content-between">
+                <div class="col-md-6">
+                    <img src="{{product.img_url}}" alt="" class="img-fluid">
+                    {% comment %} <img src="{% static "image 25.png" %}" alt="" class="img-fluid"> {% endcomment %}
+                </div>
+                <div class="col-md-6 ">
+                    <p><a href="{% url "SSJ:necklaces" %}" class="text-decoration-none text-muted small">BACK TO SELECTION</a></p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h2 class="fs-4 fw-light mb-0">{{ product.product_name }}</h2>
+
+                            <form action="{% url 'toggle_favourite' product.slug %}" method="POST">
+                                {% csrf_token %}
+                                <button class="btn p-0 border-0 bg-transparent" type="submit">
+                                {% if request.user.is_authenticated and product.favourited_by.filter(user=request.user).exists %}
+                                    <!-- Filled heart if already favourited -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                    </svg>
+                                {% else %}
+                                    <!-- Empty heart -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                                    </svg>
+                                {% endif %}
+                                </button>
+                            </form>
+                        </div>
+
+                        <p class="fs-6 small mb-0">
+                            &#8377; 200000.00
+                        </p>
+                        <p class=" text-muted py-3 pe-3">
+                            {{product.product_description}}
+                        </p>
+                        <button class="btn border-dark rounded-0">ADD TO BAG</button>
+    
+                        <div class="accordion mt-4">
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                        DETAILS
+                                    </button>
+                                </div>
+                                <div class="accordion-collapse collapse show" id="collapse1">
+                                    <div class="accordion-body">
+                                       <ul> 
+                                        <li>Weight:{{product.weight}}</li>
+                                        <li>24k Gold</li>
+                                        <li>30 inches long</li>
+                                        <li>Adjustable lenth between 26 and 38 inches</li>
+                                       </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                        TIPS & WARNINGS
+                                    </button>
+                                </div>
+                                <div class="accordion-collapse collapse" id="collapse2">
+                                    <div class="accordion-body">
+                                       <ul> 
+                                        <li>  Keep in a jewelry box to preserve quality.</li>
+                                        <li>  Keep out of swimming pools to prevent discoloration.</li>
+                                        <li>  We recommend you clean your jewelry every 3-4 months.</li>
+                                       </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                </div>
+            </div>
+            <hr>
+
+            <!--Recommended Products-->
+            <div>
+                <!-- content -->
+                <div>
+                    <h5 class="fw-light mb-0">Recommend for You</h5>
+                    <span class="fw-lighter">Based on your history</span>
+                </div>
+                <div class="d-flex justify-content-around gap-3">
+                    <div class="category-card">
+                        <a class="text-decoration-none text-dark" href="">
+                            <img src="{% static "img/necklaces/Frame 17 (1).png" %}" class="img-fluid product-img" alt="">
+                            <h6 class="pt-2 mb-1">HEART DROP</h6>
+                            <p class="fs-6 small mb-0">
+                                &#8377; 1000
+                            </p>
+                        </a>
+                    </div>
+                    <div class="category-card">
+                        <a class="text-decoration-none text-dark" href="">
+                            <img src="{% static "img/necklaces/Frame 17 (2).png" %}" class="img-fluid product-img" alt="">
+                            <h6 class="pt-2 mb-1">DIAMOND CHOKER</h6>
+                            <p class="fs-6 small mb-0">
+                                &#8377; 1000
+                            </p>
+                        </a>
+                    </div>
+                    <div class="category-card">
+                        <a class="text-decoration-none text-dark" href="">
+                            <img src="{% static "/img/necklaces/Frame 17 (3).png" %}" class="img-fluid product-img" alt="">
+                            <h6 class="pt-2 mb-1">LEAF PENDANT</h6>
+                            <p class="fs-6 small mb-0">
+                                &#8377; 1000
+                            </p>
+                        </a>
+                    </div>
+                    <div class="category-card">
+                        <a class="text-decoration-none text-dark" href="">
+                            <img src="{% static "/img/necklaces/Frame 17 (4).png" %}" class="img-fluid product-img" alt="">
+                            <h6 class="pt-2 mb-1">RUBY PENDANT</h6>
+                            <p class="fs-6 small mb-0">
+                                &#8377; 1000
+                            </p>
+                        </a>
+                    </div>
+                    <div class="category-card">
+                        <a class="text-decoration-none text-dark" href="">
+                            <img src="{% static "/img/necklaces/6.png" %}" class="img-fluid product-img" alt="">
+                            <h6 class="pt-2 mb-1">OPAL HEART</h6>
+                            <p class="fs-6 small mb-0">
+                                &#8377; 1000
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+  
+
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+    
+    <!-- Necklaces us -->
+     <section class="my-3">
+        <div class="container text-center">
+            <h2>{{Title}}</h2>
+            <p class="text-muted">{{Sub_description}}</p>
+        
+        <div class="d-flex justify-content-center align-items-center border-bottom pb-2 mb-4">
+            <span class="me-3 text-muted">SORT BY:</span>
+            <button type="button" class="btn me-2">Popularity</button>
+            <button type="button" class="btn me-2">Type</button>
+            <button type="button" class="btn me-2">Gemstone</button>
+            <button type="button" class="btn">Price</button>
+        </div>
+        </div>
+        <div class="container ">
+            <div class="row align-items-start text-center ">
+
+                {% for product in products %}
+                
+                <div class="col-12 col-lg-3 col-md-4 mb-4 category-card">
+                    <a class="text-decoration-none text-dark" href="{% url "SSJ:details" slug=product.slug %}">
+                        <img src="{{product.formatted_url}}" class="img-fluid product-img"  alt="">
+                        <h6 class="pt-2 mb-1">{{product.product_name}}</h6>
+                        <h6 class="pt-2 mb-1">{{product.category.name | upper}}</h6>
+                        <p class="fs-6 small mb-0">
+                            &#8377; {{product.current_price}}
+                        </p>
+                    </a>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+     </section>
+    {% endblock %}

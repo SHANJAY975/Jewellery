@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <!--Hero Section-->
+    <section class="hero d-flex justify-content-start align-items-center" >
+        <div class="container">
+            <div class="text-white">
+                <h1 class="fs-large">the autumn equinox</h1>
+                <p class="mb-0">Fall has arrived.</p>
+                <p class="mt-0">Shop for our new release Today.</p>
+                <button class="btn btn-outline-light rounded-0 text-white" type="button">Shop Now</button>
+            </div>
+            
+        </div>
+    </section>
+    
+    <!--Shop by Category-->
+    <section class="py-5 text-center">
+        <div class="container">
+            <p class="fs-4 fw-light mb-0">Shop by category</p>
+            <p class=""><i>Indulge in what we offer.</i></p>
+            <div class="row justify-content-center gap-3">
+                
+                <!-- Necklaces -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2 category-card text-center">
+                    <a class="text-decoration-none text-dark" href="{% url "SSJ:necklaces" %}">
+                        <img src="{% static 'img/necklaces.png' %}" class="img-fluid mb-2" alt="">
+                        <h6>Necklaces</h6>
+                    </a>
+                </div>
+
+                <!-- Earrings -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2 category-card">
+                    <a class="text-decoration-none text-dark" href="{% url "SSJ:earrings" %}">
+                        <img src="{% static "img/earrings.png" %}" class="img-fluid mb-2" alt="">
+                        <h6>Earrings</h6>
+                    </a>
+                </div>
+
+                <!-- Bracelets -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2 category-card">
+                    <a class="text-decoration-none text-dark" href="{% url "SSJ:bracelets" %}">
+                        <img src="{% static "img/bracelets.png" %}" class="img-fluid mb-2" alt="">
+                        <h6>Bracelets</h6>
+                    </a>
+                </div>
+
+
+                <!-- Rings -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2 category-card">
+                    <a class="text-decoration-none text-dark" href="{% url "SSJ:rings" %}">
+                        <img src="{% static "img/rings.png" %}" class="img-fluid mb-2" alt="">
+                        <h6>Rings</h6>
+                    </a>
+                </div>
+
+                <!-- Charms -->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-2 category-card">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <img src="{% static "img/charms.png" %}" class="img-fluid mb-2" alt="">
+                        <h6>Charms</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gifts of Season -->
+    <section class="py-3">
+        <div class="container-fluid" style="background-color: #F4F0EB;">
+            <div class="row align-items-center">
+                <div class="col-md-6 p-5 d-flex flex-column justify-content-center  justify-content-md-start align-items-center align-items-md-start text-center text-md-start">
+                    <h1 class="fs-3 fw-bold">
+                        Gifts of the season
+                    </h1>
+                    <p class="fs-5">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione ducimus ea sit ipsa quibusdam. Soluta quas, perspiciatis, quam voluptas ea autem nam esse eius, sunt in odit modi aut totam!
+                    </p>
+                    <button class="btn btn-outline-dark rounded-3 text-dark">Shop Gifts</button>
+                </div>
+                <div class="col-6 p-0 d-none d-md-block">
+                    <img src="{% static "img/giftsofseason.png" %}" class="img-fluid w-100 h-100" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About us -->
+     <section class="pb-3">
+        <div class="container-fluid text-white" style="background-color: #0C0606;">
+            <div class="row">
+                <div class="col-6 p-0">
+                    <img src="{% static "img/aboutus.png" %}" class="img-fluid w-100 h-100" alt="">
+                </div>
+                <div class="col-6 d-flex flex-column justify-content-center align-items-start gap-3">
+                    <h1 class="fs-3 fw-bold">What were we made for?</h1>
+                    <p class="fs-5"> 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                        Metus vulputate eu scelerisque felis imperdiet proin fermentum. 
+                        Cras semper auctor neque vitae tempus quam pellentesque. 
+                    </p>
+                    <p class="fs-5">
+                        Elementum sagittis vitae et leo duis. 
+                        Elementum sagittis vitae et leo duis. 
+                        Libero nunc consequat interdum varius. 
+                        Habitant morbi tristique senectus et netus et malesuada fames ac. 
+                    </p>
+                    <a class="btn btn-outline-light rounded-0  text-white about_us_btn" href="{% url "SSJ:about" %}">About Us</a>
+                </div>
+            </div>
+        </div>
+     </section>
+
+{% endblock content %}

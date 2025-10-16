@@ -1,0 +1,108 @@
+body {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.hero{
+  position: relative;
+  height: 100vh;
+  background: url(../img/hero_img.png) no-repeat center center/cover;
+}
+
+.hero-content{
+  position: relative;
+  font-family: "Georgia", serif;
+
+}
+
+/* Remove the arrow from dropdown-toggle */
+.no-arrow::after {
+  display: none !important;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  display: block;
+  min-width: 100%;
+}
+.no-hover:hover .dropdown-menu:not(.show) {
+  display: none;
+}
+
+.about {
+  position: relative;
+  background: url(../img/aboutus_bg.png) no-repeat right center / cover;
+  min-height: 100vh; 
+  color: white;
+  display: flex;
+  align-items: center; 
+}
+
+.about_us_btn:hover{
+  color:black;
+}
+
+.product-img {
+  max-height: 350px !important;                /* fixed height */
+  width: 100%;                  /* stretch within card */
+  object-fit: contain;          /* preserve aspect ratio */
+  display: block;
+  background-color:white;    /* optional: gives a neutral background */
+  border-radius: 8px;           /* optional: makes it cleaner */
+}
+
+
+.offcanvas_header_color{
+  background-color: #F6F6F6;
+}
+
+.forgot-link{
+  color: #737373;
+  transition: color 0.3s ease-out;
+}
+.forgot-link:hover {
+  color: #CA9577;   /* hover yellow */
+}
+
+.modal-body{
+  max-height: 600px;
+}
+.accordion {
+
+  --bs-accordion-active-color: #B18165 !important;  /* text color when active */
+  --bs-accordion-active-bg: #fff !important;
+}
+
+
+
+
+.category-card img {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .category-card h6 {
+        transition: color 0.3s ease-in-out;
+    }
+
+    .category-card:hover img {
+        filter: brightness(1) invert(0.2); /* makes image white */
+    }
+
+    .category-card:hover h6{
+        color: #B18165; 
+    }
+    .category-card:hover p{
+        color: #B18165; 
+    }
+    
+/* Custom width for desktop */
+.custom-offcanvas {
+    width: 35% !important; /* must use !important to override Bootstrap */
+    max-width: 90%; /* optional to prevent overflow */
+}
+
+/* Optional: for smaller screens */
+@media (max-width: 768px) {
+    .custom-offcanvas {
+        width: 100% !important; /* full width on mobile */
+    }
+}

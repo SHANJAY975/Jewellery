@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Jewellery Image Generator</h1>
+
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="prompt" class="form-label">Enter Jewellery Description:</label>
+            <textarea id="prompt" name="prompt" class="form-control" rows="5" placeholder="A luxurious 22k gold necklace with diamonds...">{{ request.POST.prompt }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Generate</button>
+    </form>
+
+    {% if generated_image_url %}
+    <div class="mt-4">
+        <h2>Generated Image:</h2>
+        <img src="{{ generated_image_url }}" alt="Generated Jewellery" class="img-fluid border">
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+</div>
+{% endblock %}

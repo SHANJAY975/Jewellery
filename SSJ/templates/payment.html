@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Razorpay Payment</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <h2>Pay ₹500</h2>
+  <button id="rzp-button">Pay Now</button>
+
+  <script>
+    document.getElementById('rzp-button').onclick = async function(e) {
+      e.preventDefault();
+
+      // Create Razorpay order
+      const response = await fetch("/purchase/payment/", { method: "POST" });
+      const data = await response.json();
+
+      const options = {
+        key: "{{ key_id }}",
+        amount: data.amount,
+        currency: "INR",
+        order_id: data.order_id,
+        name: "Jewellery Store",
+        description: "Test Payment",
+        handler: function (response) {
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = "/verify/";
+
+          const fields = ["razorpay_payment_id", "razorpay_order_id", "razorpay_signature"];
+          fields.forEach(f => {
+            const input = document.createElement("input");
+            input.name = f;
+            input.value = response[f];
+            form.appendChild(input);
+          });
+
+          const csrf = document.createElement("input");
+          csrf.name = "csrfmiddlewaretoken";
+          csrf.value = "{{ csrf_token }}";
+          form.appendChild(csrf);
+
+          document.body.appendChild(form);
+          form.submit();
+        },
+        theme: { color: "#3399cc" }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    };
+  </script>
+</body>
+</html>
